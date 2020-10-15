@@ -25,7 +25,7 @@ def train_fn(X_train_shards, Y_train_shards, X_test, Y_test, return_dict,
     agent_indices = np.arange(args.k)
     if args.mal:
         mal_agent_index = gv.mal_agent_index
-
+    #unused fraction
     unupated_frac = (args.k - num_agents_per_time) / float(args.k)
     t = 0
     mal_visible = []
@@ -37,6 +37,8 @@ def train_fn(X_train_shards, Y_train_shards, X_test, Y_test, return_dict,
         krum_select_indices = []
 
     while return_dict['eval_success'] < gv.max_acc and t < args.T:
+    #T -> total number of iteration
+    #gv.max_acc -> maximuaccuracy for each dataset
         print('Time step %s' % t)
 
         process_list = []
@@ -117,9 +119,9 @@ def train_fn(X_train_shards, Y_train_shards, X_test, Y_test, return_dict,
                 dists = np.sort(np.array(dists))
                 dists_subset = dists[:agg_num]
                 score_array[k] = np.sum(dists_subset)
-            print score_array
+            print (score_array)
             krum_index = np.argmin(score_array)
-            print krum_index
+            print (krum_index)
             global_weights += return_dict[str(krum_index)]
             if krum_index == mal_agent_index:
                 krum_select_indices.append(t)
